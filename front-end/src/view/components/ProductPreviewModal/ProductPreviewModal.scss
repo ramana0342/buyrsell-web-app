@@ -1,0 +1,11 @@
+.product-preview-modal { position:fixed; z-index:1000; inset:0; display:flex; align-items:center; justify-content:center; padding:clamp(8px,3vw,28px); background:rgba(15,23,42,.62); }
+.product-preview-modal__dialog { display:flex; flex-direction:column; width:min(100%,1100px); max-height:min(94dvh,1000px); overflow:hidden; border:1px solid #e2e8f0; border-radius:17px; background:#f8fafc; box-shadow:0 28px 90px rgba(15,23,42,.3); }
+.product-preview-modal__header { display:flex; align-items:center; justify-content:space-between; flex:none; padding:14px 20px; border-bottom:1px solid #e2e8f0; background:#fff; }
+.product-preview-modal__header p { margin:0 0 3px; color:#2563eb; font-size:.62rem; font-weight:800; letter-spacing:.13em; }.product-preview-modal__header h2 { margin:0; color:#172033; font-size:1.1rem; }
+.product-preview-modal__header button { display:grid; place-items:center; width:38px; height:38px; border:1px solid #e2e8f0; border-radius:9px; background:#fff; color:#475569; cursor:pointer; }
+.product-preview-modal__body { overflow:auto; padding:18px; }.product-preview-modal__showcase { display:grid; grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr); gap:16px; }
+.product-preview-modal__gallery, .product-preview-modal__information { min-width:0; overflow:hidden; padding:18px; border:1px solid #e8edf5; border-radius:15px; background:#fff; }
+.product-preview-modal__gallery .product-gallery__preview { max-height:380px; }.product-preview-modal__gallery .product-gallery__preview img { max-height:360px; object-fit:contain; }
+.product-preview-modal__body .product-description { margin-top:16px; }
+@media(max-width:740px) { .product-preview-modal__showcase { grid-template-columns:1fr; gap:12px; }.product-preview-modal__gallery, .product-preview-modal__information { padding:14px; border-radius:12px; }.product-preview-modal__gallery .product-gallery__preview { max-height:300px; }.product-preview-modal__gallery .product-gallery__preview img { max-height:270px; } }
+@media(max-width:420px) { .product-preview-modal { padding:6px; }.product-preview-modal__dialog { max-height:96dvh; border-radius:13px; }.product-preview-modal__header { padding:11px 13px; }.product-preview-modal__body { padding:10px; }.product-preview-modal__gallery, .product-preview-modal__information { padding:11px; } }

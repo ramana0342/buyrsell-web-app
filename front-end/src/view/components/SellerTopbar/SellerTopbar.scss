@@ -1,0 +1,8 @@
+.seller-topbar { position:sticky; top:0; z-index:10; display:flex; align-items:center; justify-content:space-between; min-height:74px; padding:10px 30px; border-bottom:1px solid #e8edf3; background:rgba(255,255,255,.96); }
+.seller-topbar__heading p { margin:0 0 3px; color:#8290a4; font-size:.65rem; font-weight:800; letter-spacing:.13em; }
+.seller-topbar__heading h1 { margin:0; color:#172033; font-size:1.13rem; font-weight:750; }
+.seller-topbar__profile { display:flex; align-items:center; gap:9px; color:#475569; font-size:.87rem; font-weight:600; }
+.seller-topbar__profile svg { color:#64748b; font-size:1.45rem; }
+.seller-topbar__menu { display:none; width:40px; height:40px; align-items:center; justify-content:center; border:1px solid #e2e8f0; border-radius:9px; background:#fff; color:#334155; font-size:1rem; }
+@media(max-width:760px) { .seller-topbar { position:sticky; min-height:64px; padding:8px 14px; gap:12px; } .seller-topbar__menu { display:flex; flex:none; } .seller-topbar__heading { margin-right:auto; } .seller-topbar__heading p { font-size:.58rem; } .seller-topbar__heading h1 { font-size:1rem; } .seller-topbar__profile span { display:none; } }
+@media(max-width:340px) { .seller-topbar { padding:8px 10px; gap:8px; } }

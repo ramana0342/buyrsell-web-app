@@ -1,0 +1,114 @@
+.offer-card {
+  min-width: 0;
+  margin: 16px 0;
+  padding: clamp(14px, 2.5vw, 22px);
+  overflow: hidden;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  background: #fff;
+  box-shadow: 0 4px 16px #0f172a08;
+  color: #172033;
+
+  &__header { display: flex; align-items: center; gap: 14px; min-width: 0; }
+  &__header > img { width: 58px; height: 58px; flex: 0 0 58px; object-fit: cover; border-radius: 9px; background: #f1f5f9; }
+  &__identity { flex: 1; min-width: 0; }
+  &__identity h2 { margin: 0 0 5px; font-size: 1.08rem; line-height: 1.35; overflow-wrap: anywhere; }
+  &__identity p { margin: 0; color: #64748b; font-size: .9rem; line-height: 1.5; overflow-wrap: anywhere; }
+  &__prices { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 145px), 1fr)); gap: 9px; margin: 18px 0; }
+  &__prices > div { display: grid; gap: 5px; min-width: 0; padding: 11px 12px; border: 1px solid #e8edf3; border-radius: 9px; background: #f8fafc; }
+  &__prices span { color: #64748b; font-size: .78rem; }
+  &__prices strong { font-size: .98rem; overflow-wrap: anywhere; }
+  &__prices .offer-card__agreed { border-color: #bbf7d0; background: #f0fdf4; }
+  &__agreed strong { color: #166534; }
+  &__notice { margin: 12px 0; color: #475569; line-height: 1.5; overflow-wrap: anywhere; }
+  &__error, &__success { margin: 12px 0; padding: 10px 12px; border-radius: 8px; line-height: 1.45; }
+  &__error { color: #991b1b; background: #fef2f2; }
+  &__success { color: #166534; background: #f0fdf4; }
+  &__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 9px; margin-top: 14px; }
+
+  button { min-height: 42px; padding: 10px 14px; border: 1px solid #2563eb; border-radius: 8px; background: #2563eb; color: #fff; font: inherit; font-size: .9rem; font-weight: 700; line-height: 1.2; cursor: pointer; transition: background .15s ease, border-color .15s ease, transform .15s ease; }
+  button:hover:not(:disabled) { border-color: #1d4ed8; background: #1d4ed8; }
+  button:active:not(:disabled) { transform: translateY(1px); }
+  button:disabled { opacity: .6; cursor: wait; }
+  button.offer-button--secondary { border-color: #cbd5e1; background: #fff; color: #334155; }
+  button.offer-button--secondary:hover:not(:disabled) { border-color: #94a3b8; background: #f8fafc; }
+
+  a { color: #1d4ed8; }
+}
+
+.offer-status { flex: none; padding: 6px 10px; border-radius: 999px; background: #eff6ff; color: #1d4ed8; font-size: .78rem; font-weight: 750; text-transform: capitalize; }
+.offer-status--accepted { background: #dcfce7; color: #166534; }
+.offer-status--rejected, .offer-status--expired, .offer-status--cancelled { background: #fee2e2; color: #991b1b; }
+.offer-status--pending_contact { background: #fff7ed; color: #9a3412; }
+
+.negotiation-history {
+  margin: 14px 0;
+  overflow: hidden;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  background: #fff;
+
+  > summary { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 13px 15px; cursor: pointer; list-style: none; font-weight: 700; }
+  > summary::-webkit-details-marker { display: none; }
+  > summary small { color: #64748b; font-weight: 500; }
+  > summary svg { flex: none; color: #64748b; transition: transform .2s ease; }
+  &[open] > summary svg { transform: rotate(180deg); }
+  &__body { display: grid; grid-template-rows: 0fr; overflow: hidden; transition: grid-template-rows .22s ease; }
+  &[open] &__body { grid-template-rows: 1fr; }
+  &__timeline { min-height: 0; max-height: 360px; overflow: auto; list-style: none; margin: 0; padding: 2px 15px 14px 31px; }
+  &__timeline li { position: relative; margin: 0; padding: 12px 0 12px 15px; border-left: 2px solid #dbeafe; }
+  &__timeline li::before { position: absolute; top: 17px; left: -6px; width: 10px; height: 10px; border-radius: 50%; background: #3b82f6; content: ""; }
+  &__entry-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 5px 10px; color: #475569; font-size: .86rem; }
+  &__entry-head strong { color: #172033; }
+  &__amount { display: block; margin-top: 5px; color: #1e3a8a; font-size: 1.02rem; }
+  &__message { margin: 6px 0 0; color: #475569; line-height: 1.5; overflow-wrap: anywhere; }
+  &__timeline time { display: block; margin-top: 6px; color: #64748b; font-size: .76rem; }
+  &__empty { margin: 0; padding: 5px 15px 15px; color: #64748b; }
+}
+
+.counteroffer-form {
+  display: grid;
+  gap: 14px;
+  min-width: 0;
+  margin-top: 14px;
+  padding: 16px;
+  border: 1px solid #bfdbfe;
+  border-radius: 11px;
+  background: #f8fbff;
+
+  h3 { margin: 0; color: #172033; font-size: 1rem; }
+  &__fields { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr); gap: 13px; }
+  &__fields label { display: grid; align-content: start; gap: 6px; min-width: 0; color: #334155; font-size: .86rem; font-weight: 650; }
+  input, textarea { box-sizing: border-box; width: 100%; min-width: 0; padding: 10px 11px; border: 1px solid #cbd5e1; border-radius: 8px; background: #fff; color: #172033; font: inherit; font-size: .92rem; }
+  input:focus, textarea:focus { outline: 3px solid #bfdbfe; border-color: #3b82f6; }
+  [aria-invalid="true"] { border-color: #dc2626; }
+  &__fields small { color: #64748b; font-size: .77rem; font-weight: 400; }
+  &__fields .counteroffer-form__error { color: #b91c1c; }
+  &__actions { display: flex; flex-wrap: wrap; gap: 9px; }
+}
+
+.offers-empty { padding: 24px; border: 1px dashed #cbd5e1; border-radius: 12px; background: #fff; color: #64748b; }
+.offers-page { box-sizing: border-box; width: min(100%, 992px); margin: 32px auto; padding: 0 16px 48px; color: #172033; }
+.offers-page h1 { font-size: clamp(1.6rem, 4vw, 2.2rem); }
+.offer-loading { padding: 20px; color: #64748b; }
+
+@media (max-width: 600px) {
+  .offer-card__header { flex-wrap: wrap; gap: 11px; }
+  .offer-status { margin-left: 0; }
+  .offer-card__identity { flex-basis: calc(100% - 75px); }
+  .counteroffer-form__fields { grid-template-columns: 1fr; }
+  .offer-card__actions, .counteroffer-form__actions { display: grid; grid-template-columns: 1fr; }
+  .offer-card__actions > button, .counteroffer-form__actions > button { width: 100%; }
+  .counteroffer-form { padding: 13px; }
+  .negotiation-history__timeline { padding-right: 11px; }
+}
+
+@media (max-width: 360px) {
+  .offers-page { padding-inline: 12px; }
+  .offer-card__header > img { width: 48px; height: 48px; flex-basis: 48px; }
+  .offer-card__identity { flex-basis: calc(100% - 62px); }
+  .offer-card__prices { grid-template-columns: 1fr 1fr; gap: 7px; }
+  .offer-card__prices > div { padding: 9px; }
+  .offer-status { font-size: .72rem; }
+  .negotiation-history > summary { padding: 12px; }
+}

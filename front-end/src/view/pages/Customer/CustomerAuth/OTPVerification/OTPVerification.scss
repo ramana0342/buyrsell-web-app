@@ -1,0 +1,362 @@
+.otp-verification {
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    gap: 22px;
+
+    text-align: center;
+
+    &__success-icon {
+
+        width: 90px;
+
+        height: 90px;
+
+        border-radius: 50%;
+
+        background: linear-gradient(135deg,
+                #dcfce7,
+                #bbf7d0);
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        svg {
+
+            font-size: 42px;
+
+            color: #16a34a;
+
+        }
+
+    }
+
+    h3 {
+
+        margin: 0;
+
+        font-size: 1.7rem;
+
+        font-weight: 700;
+
+        color: #111827;
+
+    }
+
+    p {
+
+        margin: 0;
+
+        color: #6b7280;
+
+        line-height: 1.7;
+
+        font-size: .95rem;
+
+    }
+
+    &__inputs {
+
+        width: 100%;
+
+        display: flex;
+
+        justify-content: center;
+
+        gap: 12px;
+
+        input {
+
+            width: 52px;
+
+            height: 60px;
+
+            border: 1px solid #d1d5db;
+
+            border-radius: 14px;
+
+            text-align: center;
+
+            font-size: 1.3rem;
+
+            font-weight: 700;
+
+            outline: none;
+
+            transition: .3s;
+
+            &:focus {
+
+                border-color: #2563eb;
+
+                box-shadow: 0 0 0 4px rgba(37, 99, 235, .12);
+
+            }
+
+            &:disabled {
+
+                background: #f8fafc;
+
+                cursor: not-allowed;
+
+            }
+
+        }
+
+    }
+
+    &__verify {
+
+        width: 100%;
+
+        height: 56px;
+
+        border: none;
+
+        border-radius: 14px;
+
+        background: linear-gradient(135deg,
+                #2563eb,
+                #1d4ed8);
+
+        color: #fff;
+
+        font-size: 1rem;
+
+        font-weight: 600;
+
+        cursor: pointer;
+
+        transition: .3s;
+
+        &:hover:not(:disabled) {
+
+            transform: translateY(-2px);
+
+            box-shadow: 0 14px 28px rgba(37, 99, 235, .25);
+
+        }
+
+        &:disabled {
+
+            opacity: .7;
+
+            cursor: not-allowed;
+
+        }
+
+    }
+
+    &__resend {
+
+        min-height: 32px;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        span {
+
+            color: #64748b;
+
+            font-size: .9rem;
+
+        }
+
+        button {
+
+            border: none;
+
+            background: transparent;
+
+            color: #2563eb;
+
+            font-weight: 600;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            cursor: pointer;
+
+            transition: .25s;
+
+            &:hover {
+
+                color: #1d4ed8;
+
+            }
+
+
+            &:disabled {
+
+                opacity: .7;
+
+                cursor: not-allowed;
+
+            }
+
+        }
+
+    }
+
+    &__back {
+
+        border: none;
+
+        background: transparent;
+
+        color: #6b7280;
+
+        display: flex;
+
+        align-items: center;
+
+        gap: 8px;
+
+        cursor: pointer;
+
+        font-size: .95rem;
+
+        transition: .25s;
+
+        &:hover {
+
+            color: #111827;
+
+        }
+
+        &:disabled {
+
+            opacity: .6;
+
+            cursor: not-allowed;
+
+        }
+
+    }
+
+    @media (max-width:575px) {
+
+        gap: 18px;
+
+        &__success-icon {
+
+            width: 74px;
+
+            height: 74px;
+
+            svg {
+
+                font-size: 34px;
+
+            }
+
+        }
+
+        h3 {
+
+            font-size: 1.45rem;
+
+        }
+
+        p {
+
+            font-size: .9rem;
+
+        }
+
+        &__inputs {
+
+            gap: 8px;
+
+            input {
+
+                width: 42px;
+
+                height: 52px;
+
+                font-size: 1.1rem;
+
+            }
+
+        }
+
+        &__verify {
+
+            height: 52px;
+
+            font-size: .95rem;
+
+        }
+
+        &__resend {
+
+            span,
+
+            button {
+
+                font-size: .85rem;
+
+            }
+
+        }
+
+        &__back {
+
+            font-size: .88rem;
+
+        }
+
+    }
+
+    @media (max-width:360px) {
+
+        &__inputs {
+
+            gap: 6px;
+
+            input {
+
+                width: 38px;
+
+                height: 48px;
+
+                font-size: 1rem;
+
+            }
+
+        }
+
+    }
+
+    @media (min-width:768px) {
+
+        &__inputs {
+
+            input {
+
+                width: 58px;
+
+                height: 66px;
+
+                font-size: 1.45rem;
+
+            }
+
+        }
+
+    }
+
+}

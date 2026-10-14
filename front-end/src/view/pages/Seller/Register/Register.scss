@@ -1,0 +1,135 @@
+.seller-register-form-container {
+    form {
+        .form-group {
+            gap: 2px;
+            margin-bottom: 12px;
+        }
+    }
+}
+
+// .seller-register {
+//     min-height: calc(100vh - 70px);
+//     background: #f8fafc;
+//     padding: 50px 20px;
+// }
+
+// .register-container {
+//     max-width: 1200px;
+//     margin: auto;
+
+//     display: grid;
+//     grid-template-columns: 1fr 1fr;
+//     gap: 50px;
+//     align-items: center;
+// }
+
+// .left-section {
+
+//     h1 {
+//         font-size: 42px;
+//         color: #2563eb;
+//         margin-bottom: 20px;
+//     }
+
+//     p {
+//         color: #555;
+//         line-height: 1.7;
+//         margin-bottom: 30px;
+//     }
+
+//     ul {
+//         list-style: none;
+//         padding: 0;
+//     }
+
+//     li {
+//         margin-bottom: 18px;
+//         font-size: 18px;
+//         color: #333;
+//     }
+// }
+
+// .right-section {
+
+//     background: white;
+//     padding: 40px;
+//     border-radius: 15px;
+//     box-shadow: 0 10px 30px rgba(0, 0, 0, .08);
+
+//     h2 {
+//         text-align: center;
+//         margin-bottom: 30px;
+//         color: #111827;
+//     }
+
+//     form {
+//         display: flex;
+//         flex-direction: column;
+//         gap: 18px;
+//     }
+
+//     input {
+//         height: 50px;
+//         padding: 0 15px;
+//         border: 1px solid #ddd;
+//         border-radius: 8px;
+//         outline: none;
+//         font-size: 15px;
+
+//         &:focus {
+//             border-color: #2563eb;
+//         }
+//     }
+
+//     button {
+//         height: 50px;
+//         border: none;
+//         background: #2563eb;
+//         color: white;
+//         font-size: 16px;
+//         font-weight: 600;
+//         border-radius: 8px;
+//         cursor: pointer;
+//         transition: .3s;
+
+//         &:hover {
+//             background: #1d4ed8;
+//         }
+//     }
+
+//     p {
+//         margin-top: 20px;
+//         text-align: center;
+//     }
+
+//     a {
+//         margin-left: 8px;
+//         color: #2563eb;
+//         text-decoration: none;
+//         font-weight: 600;
+//     }
+// }
+
+// @media (max-width: 992px) {
+
+//     .register-container {
+//         grid-template-columns: 1fr;
+//     }
+
+//     .left-section {
+//         text-align: center;
+//     }
+
+// }
+
+// @media (max-width: 576px) {
+
+//     .right-section {
+//         padding: 25px;
+//     }
+
+//     .left-section h1 {
+//         font-size: 32px;
+//     }
+
+// }

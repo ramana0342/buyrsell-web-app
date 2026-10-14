@@ -1,0 +1,6 @@
+.seller-layout { display:flex; min-height:100vh; background:#f5f7fb; }
+.seller-content { display:flex; flex:1; flex-direction:column; min-width:0; }
+.seller-content main { flex:1; min-width:0; width:100%; max-width:1600px; margin:0 auto; padding:30px clamp(16px, 3vw, 38px); }
+.seller-layout__scrim { display:none; }
+@media(max-width:760px) { .seller-content main { padding:20px 14px 30px; } .seller-layout__scrim { position:fixed; z-index:20; inset:0; display:block; width:100%; height:100%; border:0; background:rgba(15,23,42,.48); } }
+@media(max-width:340px) { .seller-content main { padding:16px 10px 24px; } }

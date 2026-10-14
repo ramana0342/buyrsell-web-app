@@ -1,0 +1,497 @@
+.product-gallery {
+
+
+    position: relative;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 22px;
+
+
+
+
+
+    &--empty {
+
+
+        min-height: 400px;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        color: #64748b;
+
+
+    }
+
+
+
+
+
+
+
+
+    &__badge {
+
+
+        position: absolute;
+
+        top: 18px;
+
+        left: 18px;
+
+        z-index: 5;
+
+
+
+        span {
+
+
+            background: #dcfce7;
+
+            color: #15803d;
+
+            padding: 8px 16px;
+
+            border-radius: 50px;
+
+            font-size: 14px;
+
+            font-weight: 700;
+
+
+        }
+
+
+    }
+
+
+
+
+
+
+
+
+
+    &__preview {
+
+
+
+        position: relative;
+
+        width: 100%;
+
+        aspect-ratio: 1 / 1;
+
+        border-radius: 24px;
+
+        overflow: hidden;
+
+        background: #f8fafc;
+
+        display: flex;
+
+        justify-content: center;
+
+        align-items: center;
+
+
+
+
+
+
+
+        img {
+
+            width: 100%;
+
+            height: 100%;
+
+            max-width: 100%;
+
+            object-fit: contain;
+
+            transition: .4s ease;
+
+            transform: scale(1);
+
+        }
+
+
+        &:hover img {
+
+            transform: scale(1.03);
+
+        }
+
+
+
+
+
+
+    }
+
+
+
+
+
+
+
+
+
+    &__nav {
+
+
+        position: absolute;
+
+        top: 50%;
+
+        transform: translateY(-50%);
+
+        width: 44px;
+
+        height: 44px;
+
+        border-radius: 50%;
+
+        border: none;
+
+        background: #ffffff;
+
+        color: #0f172a;
+
+        display: flex;
+
+        justify-content: center;
+
+        align-items: center;
+
+        cursor: pointer;
+
+        z-index: 3;
+
+        box-shadow:
+            0 8px 25px rgba(15, 23, 42, .12);
+
+        transition: .3s;
+
+
+
+
+
+        &:hover {
+
+
+            background: #2563eb;
+
+            color: #ffffff;
+
+
+        }
+
+
+
+
+
+
+
+        &--left {
+
+
+            left: 18px;
+
+
+        }
+
+
+
+
+
+        &--right {
+
+
+            right: 18px;
+
+
+        }
+
+
+
+
+    }
+
+
+
+
+
+
+
+
+
+    &__thumbnails {
+
+
+        display: flex;
+
+        gap: 14px;
+
+        overflow-x: auto;
+
+        scrollbar-width: none;
+
+        padding-bottom: 5px;
+
+
+        &::-webkit-scrollbar {
+
+            display: none;
+
+        }
+
+
+
+
+
+        button {
+
+
+            flex-shrink: 0;
+
+            width: 76px;
+
+            height: 76px;
+
+            padding: 5px;
+
+            border-radius: 16px;
+
+            background: #fff;
+
+            border: 1px solid #e2e8f0;
+
+            cursor: pointer;
+
+            transition: .3s;
+
+
+
+
+
+
+
+            img {
+
+
+                width: 100%;
+
+                height: 100%;
+
+                object-fit: cover;
+
+                border-radius: 12px;
+
+
+            }
+
+
+
+
+
+
+
+            &:hover {
+
+
+                border-color: #2563eb;
+
+
+            }
+
+
+
+
+
+
+
+            &.active {
+
+
+                border: 2px solid #2563eb;
+
+
+            }
+
+
+
+        }
+
+
+
+    }
+
+
+
+
+
+
+
+
+    @media(max-width:768px) {
+
+
+
+        &__preview {
+
+
+            aspect-ratio: 1 / 1;
+
+            height: auto;
+
+            border-radius: 20px;
+
+
+        }
+
+
+
+
+
+
+        &__nav {
+
+
+            width: 38px;
+
+            height: 38px;
+
+
+
+        }
+
+
+
+
+
+
+
+        &__thumbnails {
+
+
+
+            button {
+
+
+                width: 65px;
+
+                height: 65px;
+
+
+            }
+
+
+        }
+
+
+
+    }
+
+    @media(max-width:480px) {
+        gap: 16px;
+
+        &__preview {
+
+            aspect-ratio: 1 / 1;
+
+            height: auto;
+
+            border-radius: 18px;
+        }
+
+
+
+        &__badge {
+
+
+            top: 12px;
+
+            left: 12px;
+
+
+            span {
+
+                padding: 6px 12px;
+
+                font-size: 12px;
+
+            }
+
+        }
+
+
+
+
+
+
+        &__nav {
+
+            width: 30px;
+
+            height: 30px;
+
+            font-size: 11px;
+
+
+            &--left {
+
+                left: 8px;
+
+            }
+
+
+            &--right {
+
+                right: 8px;
+
+            }
+
+        }
+
+
+
+
+
+        &__thumbnails {
+
+
+            gap: 8px;
+
+
+
+            button {
+
+
+                width: 52px;
+
+                height: 52px;
+
+                border-radius: 12px;
+
+
+            }
+
+
+        }
+
+
+    }
+
+
+
+
+
+}

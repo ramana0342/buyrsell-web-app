@@ -1,0 +1,55 @@
+.stat-card{
+
+    background:#fff;
+
+    border-radius:12px;
+
+    padding:24px;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:20px;
+
+    box-shadow:0 4px 15px rgba(0,0,0,.08);
+
+}
+
+.stat-card__icon{
+
+    width:60px;
+
+    height:60px;
+
+    border-radius:12px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    color:#fff;
+
+    font-size:26px;
+
+}
+
+.stat-card h4{
+
+    color:#6b7280;
+
+    font-size:15px;
+
+    margin-bottom:8px;
+
+}
+
+.stat-card h2{
+
+    font-size:28px;
+
+    color:#111827;
+
+}

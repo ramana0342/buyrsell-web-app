@@ -1,0 +1,14 @@
+import express from "express";
+import { verifyCustomerJWT } from "../middlewares/verifyCustomerJWT.js";
+import { authenticateSeller } from "../middlewares/authenticateSeller.js";
+import { createOffer, createCombinedOffer, customerOffers, sellerOffers, offerAction, confirmContact } from "../controllers/offerController.js";
+const router = express.Router();
+router.post("/customer/offers", verifyCustomerJWT, createOffer);
+router.post("/customer/offers/combined", verifyCustomerJWT, createCombinedOffer);
+router.get("/customer/offers", verifyCustomerJWT, customerOffers);
+router.post("/customer/offers/:offerId/actions", verifyCustomerJWT, offerAction);
+router.post("/customer/offers/:offerId/contact-confirmation", verifyCustomerJWT, confirmContact);
+router.get("/seller/offers", authenticateSeller, sellerOffers);
+router.post("/seller/offers/:offerId/actions", authenticateSeller, offerAction);
+router.post("/seller/offers/:offerId/contact-confirmation", authenticateSeller, confirmContact);
+export default router;
