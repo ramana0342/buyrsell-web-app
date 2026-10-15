@@ -5,6 +5,7 @@ import { FaPlus, FaSearch, FaEdit, FaTrash, FaEye, FaRedo } from "react-icons/fa
 import SellerLayout from "../../../../layouts/SellerLayout/SellerLayout";
 import Pagination from "../../../../components/Pagination/Pagination";
 import { getSellerProducts, deleteProduct } from "../../../../../network/sellerApiService/sellerProductService";
+import { SkeletonRows } from "../../../../components/Skeletons/Skeletons";
 
 const ProductList = () => {
     const [products, setProducts] = useState([]);
@@ -64,7 +65,7 @@ const ProductList = () => {
             </div>
             <div className="product-list__summary"><h2>Products</h2><span>{pagination.totalItems} {pagination.totalItems === 1 ? "product" : "products"}</span></div>
             {error ? <div className="product-list__state product-list__state--error" role="alert"><p>{error}</p><button onClick={loadProducts}><FaRedo /> Retry</button></div>
-                : loading ? <div className="product-list__state" role="status">Loading your products…</div>
+                : loading ? <SkeletonRows count={5} />
                     : products.length === 0 ? <div className="product-list__state"><div className="product-list__empty-icon">⌕</div><h3>{query ? "No Products Found" : "No Products Yet"}</h3><p>{query ? "No products match your search. Try another term." : "Start adding products to your marketplace."}</p>{!query && <Link to="/seller/products/add" className="add-product-btn"><FaPlus /> Add Product</Link>}</div>
                         : <>
                             <div className="product-table"><table><thead><tr><th>Product</th><th>Category</th><th>Price</th><th>Stock</th><th>Status</th><th>Actions</th></tr></thead>

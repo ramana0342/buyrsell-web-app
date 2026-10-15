@@ -22,6 +22,7 @@ import {
 import Header from "../../../components/Header/Header";
 
 import WishlistItem from "./WishlistItem";
+import { SkeletonRows } from "../../../components/Skeletons/Skeletons";
 
 const Wishlist = () => {
 
@@ -106,20 +107,7 @@ const Wishlist = () => {
 
                     <div className="wishlist-page__container">
 
-                        <section className="wishlist-loading">
-
-                            <div className="wishlist-loading__spinner" />
-
-                            <h2>
-                                Loading your wishlist
-                            </h2>
-
-                            <p>
-                                Please wait while we load
-                                your saved products.
-                            </p>
-
-                        </section>
+                        <section className="wishlist-loading"><h2>Loading your wishlist</h2><SkeletonRows count={3} /></section>
 
                     </div>
 

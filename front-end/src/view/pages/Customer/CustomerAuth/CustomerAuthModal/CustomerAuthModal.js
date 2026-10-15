@@ -50,7 +50,7 @@ const modalContent = {
             "Create Account",
 
         subtitle:
-            "Create your BuyRSell Mart account."
+            "Create your buyRsell Mart account."
 
     },
 

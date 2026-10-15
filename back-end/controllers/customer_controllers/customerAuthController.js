@@ -834,7 +834,7 @@ export const sendPasswordResetOtp = async (
             to: customer.email,
 
             subject:
-                "Reset Your BuyRSell Mart Password",
+                "Reset Your buyRsell Mart Password",
 
             html:
                 customerPasswordResetOtpEmailTemplate(

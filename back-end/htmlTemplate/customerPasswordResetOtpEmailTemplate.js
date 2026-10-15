@@ -25,7 +25,7 @@ export const customerPasswordResetOtpEmailTemplate = (
 
             <p>
                 We received a request to reset your
-                BuyRSell Mart account password.
+                buyRsell Mart account password.
             </p>
 
             <p>
@@ -60,7 +60,7 @@ export const customerPasswordResetOtpEmailTemplate = (
 
             <p>
                 Regards,<br>
-                BuyRSell Mart Team
+                buyRsell Mart Team
             </p>
 
         </div>

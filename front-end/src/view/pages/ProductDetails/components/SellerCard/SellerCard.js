@@ -232,7 +232,7 @@ const SellerCard = ({ product }) => {
 
 
                     <strong>
-                        BuyRSell Mart Protection
+                        buyRsell Mart Protection
                     </strong>
 
 

@@ -16,6 +16,13 @@ import Cart from "../pages/Customer/Cart/Cart";
 import PasswordResetSent from "../pages/Seller/PasswordResetSent/PasswordResetSent";
 import ProductSearchResults from "../pages/ProductSearchResults/ProductSearchResults";
 import Offers from "../pages/Customer/Offers/Offers";
+import Footer from "../components/Footer/Footer";
+import { useLocation } from "react-router-dom";
+
+const AppFooter = () => {
+    const location = useLocation();
+    return location.pathname.startsWith("/seller/") ? null : <Footer />;
+};
 
 const AppRoutes = () => {
     return (
@@ -80,6 +87,7 @@ const AppRoutes = () => {
                     element={<PasswordResetSent />}
                 />
             </Routes>
+            <AppFooter />
 
 
         </BrowserRouter>

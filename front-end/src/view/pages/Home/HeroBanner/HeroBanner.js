@@ -21,7 +21,7 @@ const HeroBanner = ({ products = [], categoryProducts = [] }) => {
                 <div className="hero-banner__content">
 
                     <span className="hero-banner__tag">
-                        Welcome to BuyRSell Mart
+                        Welcome to buyRsell Mart
                     </span>
 
                     <h1 className="hero-banner__title">

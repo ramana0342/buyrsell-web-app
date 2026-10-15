@@ -1,9 +1,12 @@
 import express from "express";
 import {
     getAllProducts,
-    getProductDetails
+    getProductDetails,
+    getSitemap
 } from "../../controllers/product_controllers/productControllers.js";
 const router = express.Router();
+
+router.get("/sitemap.xml", getSitemap);
 
 router.get("/products", getAllProducts);
 

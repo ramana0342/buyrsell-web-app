@@ -62,7 +62,7 @@ const Register = () => {
 
         <AuthLayout
             title="Become a Seller"
-            subtitle="Create your seller account to start selling on BuyRSell Mart."
+            subtitle="Create your seller account to start selling on buyRsell Mart."
         >
             <div className="seller-register-form-container">
                 <form onSubmit={handleSubmit(onSubmit)}>

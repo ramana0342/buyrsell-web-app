@@ -3,6 +3,7 @@ import "./SellerLayout.scss";
 import SellerSidebar from "../../components/SellerSidebar/SellerSidebar";
 import SellerTopbar from "../../components/SellerTopbar/SellerTopbar";
 import { useState } from "react";
+import Footer from "../../components/Footer/Footer";
 
 const SellerLayout = ({ children }) => {
     const [menuOpen, setMenuOpen] = useState(false);
@@ -21,6 +22,7 @@ const SellerLayout = ({ children }) => {
                     {children}
 
                 </main>
+                <Footer seller />
 
             </div>
 

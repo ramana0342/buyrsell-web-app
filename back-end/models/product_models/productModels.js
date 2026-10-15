@@ -141,6 +141,7 @@ const getPublicProductBySlug = async (slug) => {
             p.product_status,
 
             p.created_at,
+            p.updated_at,
 
             c.category_id,
             c.category_name,
@@ -274,8 +275,14 @@ s.owner_name,
 
 };
 
+const getSitemapProducts = async () => {
+    const result = await pool.query(`SELECT slug, updated_at FROM buy_sell_mart.products WHERE product_status = 'active' AND slug IS NOT NULL AND slug <> '' ORDER BY updated_at DESC`);
+    return result.rows;
+};
+
 export {
     getAllProducts,
     getHomepageCategoryProducts,
-    getPublicProductBySlug
+    getPublicProductBySlug,
+    getSitemapProducts
 };

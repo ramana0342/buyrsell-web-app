@@ -4,7 +4,7 @@ export const customerOtpEmailTemplate = (otp) => {
 
         <div style="font-family:Arial,sans-serif">
 
-            <h2>BuyRSell Mart</h2>
+            <h2>buyRsell Mart</h2>
 
             <p>Your email verification code is</p>
 

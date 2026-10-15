@@ -13,7 +13,7 @@ const SellerSidebar = ({ onNavigate = () => {} }) => {
         navigate("/seller/login");
     };
     return <aside className="seller-sidebar" aria-label="Seller navigation">
-        <Link to="/seller/dashboard" onClick={onNavigate} className="seller-sidebar__logo" aria-label="BuyRSell Mart seller dashboard"><span className="seller-sidebar__mark"><img src="/preview.png" alt="" /></span><span>BuyRSell <b>Mart</b></span></Link>
+        <Link to="/seller/dashboard" onClick={onNavigate} className="seller-sidebar__logo" aria-label="buyRsell Mart seller dashboard"><span className="seller-sidebar__mark"><img src="/preview.png" alt="" /></span><span>buyRsell <b>Mart</b></span></Link>
         <p className="seller-sidebar__caption">WORKSPACE</p>
         <nav className="seller-sidebar__nav">
             <NavLink to="/seller/dashboard" onClick={onNavigate} className={({ isActive }) => `seller-sidebar__link${isActive ? " is-active" : ""}`}><FaTachometerAlt /><span>Dashboard</span></NavLink>

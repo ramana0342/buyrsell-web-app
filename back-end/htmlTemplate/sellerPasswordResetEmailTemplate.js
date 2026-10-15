@@ -35,7 +35,7 @@ export const sellerPasswordResetEmailTemplate = (
 
                 <p>
                     We received a request to reset the password
-                    for your BuyRSell Mart seller account.
+                    for your buyRsell Mart seller account.
                 </p>
 
                 <p>
@@ -72,7 +72,7 @@ export const sellerPasswordResetEmailTemplate = (
 
                 <p>
                     Thanks,<br>
-                    BuyRSell Mart Team
+                    buyRsell Mart Team
                 </p>
 
             </div>

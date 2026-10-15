@@ -10,6 +10,7 @@ import {
     fetchCustomerCart,
     setCartCustomer
 } from "./features/customer/customerCartSlice";
+import WelcomeModal from "./view/components/WelcomeModal/WelcomeModal";
 
 
 function App() {
@@ -44,7 +45,10 @@ function App() {
         return () => window.removeEventListener("customerTokenRefreshed", refreshCustomerData);
     }, [customer, dispatch]);
 
-    return <AppRoutes />;
+    return <>
+        <AppRoutes />
+        <WelcomeModal />
+    </>;
 }
 
 export default App;

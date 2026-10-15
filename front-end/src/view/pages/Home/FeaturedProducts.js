@@ -3,6 +3,7 @@ import "./FeaturedProducts.scss";
 
 import ProductCard from "./ProductCard/ProductCard";
 import { Link } from "react-router-dom";
+import { ProductCardSkeleton } from "../../components/Skeletons/Skeletons";
 
 const FeaturedProducts = ({ products = [], loading, error, onRetry }) => {
 
@@ -41,11 +42,7 @@ const FeaturedProducts = ({ products = [], loading, error, onRetry }) => {
                 {
                     loading && (
 
-                        <div className="featured-products__loading">
-
-                            Loading Products...
-
-                        </div>
+                        <ProductCardSkeleton count={4} />
 
                     )
                 }

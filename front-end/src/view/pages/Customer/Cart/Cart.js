@@ -25,6 +25,7 @@ import Header from "../../../components/Header/Header";
 import CartItem from "./CartItem";
 import OfferModal from "../Offers/OfferModal";
 import { getEligibleCombinedOfferGroups, pruneOfferSelection } from "./cartOfferSelection";
+import { SkeletonRows } from "../../../components/Skeletons/Skeletons";
 
 
 const Cart = () => {
@@ -236,15 +237,7 @@ const Cart = () => {
 
                 <main className="cart-page">
 
-                    <div className="cart-page__loading">
-
-                        <span className="cart-spinner"></span>
-
-                        <p>
-                            Loading your cart...
-                        </p>
-
-                    </div>
+                    <SkeletonRows count={3} />
 
                 </main>
 
