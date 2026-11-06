@@ -2,7 +2,7 @@ export const refreshCookieOptions = {
   httpOnly: true,
   secure: process.env.NODE_ENV === "production",
   sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-  maxAge: 12 * 60 * 60 * 1000
+  maxAge: 7 * 24 * 60 * 60 * 1000
 };
 
 export const refreshCookieOptionsRemove = {

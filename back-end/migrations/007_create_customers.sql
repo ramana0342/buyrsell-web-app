@@ -1,0 +1,11 @@
+
+CREATE TABLE IF NOT EXISTS buy_sell_mart.customers (
+    customer_id VARCHAR NOT NULL PRIMARY KEY,
+    full_name VARCHAR NOT NULL,
+    email VARCHAR NOT NULL UNIQUE,
+    password_hash TEXT NOT NULL,
+    email_verified BOOLEAN DEFAULT FALSE,
+    customer_status VARCHAR DEFAULT 'active',
+    created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
