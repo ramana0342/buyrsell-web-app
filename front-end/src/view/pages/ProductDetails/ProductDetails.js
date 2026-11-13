@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigationType, useParams } from "react-router-dom";
 
 import "./ProductDetails.scss";
 
@@ -15,20 +15,34 @@ import SellerCard from "./components/SellerCard/SellerCard";
 import RelatedProducts from "./components/RelatedProducts/RelatedProducts";
 import Header from "../../components/Header/Header";
 
+const cleanText = value => String(value ?? "").replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
+
 
 const ProductDetails = () => {
 
     const { slug } = useParams();
+    const navigationType = useNavigationType();
 
+    const serverProductData = window.__BUYRSELL_INITIAL_PRODUCT__;
+    const hasMatchingInitialProduct = serverProductData?.slug === slug
+        && serverProductData?.product?.slug === slug
+        && serverProductData.product.product_status === "active";
+    const [product, setProduct] = useState(() => hasMatchingInitialProduct ? serverProductData.product : null);
+    const [relatedProducts, setRelatedProducts] = useState(() => hasMatchingInitialProduct && Array.isArray(serverProductData.relatedProducts)
+        ? serverProductData.relatedProducts
+        : []);
+    const currentProductRef = useRef(product);
+    currentProductRef.current = product;
 
-    const [product, setProduct] = useState(null);
-    const [relatedProducts, setRelatedProducts] = useState([]);
-
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(!hasMatchingInitialProduct);
     const [error, setError] = useState("");
     const requestVersion = useRef(0);
 
     useEffect(() => {
+        // The server response already contains product-specific metadata while
+        // the original React page loads its product data.
+        if (!product && window.__BUYRSELL_INITIAL_PRODUCT__?.slug === slug) return undefined;
+
         const defaults = {
             title: "buyRsell Mart | Shop from trusted sellers",
             description: "Discover products from trusted sellers on buyRsell Mart.",
@@ -47,33 +61,59 @@ const ProductDetails = () => {
         setMeta('meta[name="twitter:title"]', "content", document.title);
         setMeta('link[rel="canonical"]', "href", defaults.canonical);
         let structured = document.getElementById("product-structured-data");
-        if (product) {
+        if (product?.slug === slug) {
             if (!structured) { structured = document.createElement("script"); structured.id = "product-structured-data"; structured.type = "application/ld+json"; document.head.appendChild(structured); }
-            const image = product.images?.[0]?.image_url;
-            const schema = { "@context": "https://schema.org", "@type": "Product", name: product.product_name, url: defaults.canonical };
-            if (product.brand) schema.brand = { "@type": "Brand", name: product.brand };
-            if (product.description || product.short_description) schema.description = product.description || product.short_description;
-            if (image) schema.image = [image];
-            if (product.selling_price != null) {
-                schema.offers = { "@type": "Offer", url: defaults.canonical, priceCurrency: "INR", price: Number(product.selling_price) };
-                if (product.stock_quantity != null) schema.offers.availability = Number(product.stock_quantity) > 0 ? "https://schema.org/InStock" : "https://schema.org/OutOfStock";
+            const images = (Array.isArray(product.images) ? product.images : []).map(item => item.image_url).filter(Boolean);
+            const description = cleanText(product.short_description || product.description)
+                || `${cleanText(product.product_name)} available on buyRsell Mart.`;
+            const sellingPrice = Number(product.selling_price);
+            const hasPrice = product.selling_price !== null && product.selling_price !== undefined && Number.isFinite(sellingPrice);
+            const schema = {
+                "@context": "https://schema.org",
+                "@type": "Product",
+                name: cleanText(product.product_name),
+                url: defaults.canonical,
+                description,
+                ...(images.length ? { image: images } : {})
+            };
+            if (product.brand) schema.brand = { "@type": "Brand", name: cleanText(product.brand) };
+            if (hasPrice) {
+                schema.offers = {
+                    "@type": "Offer", url: defaults.canonical, priceCurrency: "INR", price: sellingPrice,
+                    availability: Number(product.stock_quantity) > 0 ? "https://schema.org/InStock" : "https://schema.org/OutOfStock"
+                };
             }
             structured.textContent = JSON.stringify(schema);
-        } else if (structured) structured.remove();
-        return () => { const script = document.getElementById("product-structured-data"); if (script) script.remove(); };
+        } else if (structured) {
+            structured.textContent = "";
+        }
     }, [product, slug]);
+
+    useEffect(() => () => {
+        document.getElementById("product-structured-data")?.remove();
+    }, []);
 
 
 
     useEffect(() => {
         const version = ++requestVersion.current;
 
-        window.scrollTo({
-            top: 0,
-            behavior: "smooth"
-        });
+        if (navigationType !== "POP") {
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+        }
 
         if (slug) {
+            const currentProduct = currentProductRef.current;
+            if (currentProduct?.slug === slug && currentProduct.product_status === "active") {
+                setError("");
+                setLoading(false);
+                fetchProduct(slug, version, true);
+                return () => { requestVersion.current += 1; };
+            }
+
             setProduct(null);
             setRelatedProducts([]);
             setLoading(true);
@@ -81,17 +121,17 @@ const ProductDetails = () => {
         }
 
         return () => { requestVersion.current += 1; };
-    }, [slug]);
+    }, [slug, navigationType]);
 
 
 
 
 
-    const fetchProduct = async (id, version) => {
+    const fetchProduct = async (id, version, silent = false) => {
 
         try {
 
-            setLoading(true);
+            if (!silent) setLoading(true);
             setError("");
 
 
@@ -120,14 +160,11 @@ const ProductDetails = () => {
             }
             else {
 
-
-                setProduct(null);
-
-                setRelatedProducts([]);
-
-                setError(
-                    "Product not found"
-                );
+                if (!silent) {
+                    setProduct(null);
+                    setRelatedProducts([]);
+                    setError("Product not found");
+                }
 
 
             }
@@ -146,20 +183,18 @@ const ProductDetails = () => {
             );
 
 
-            setProduct(null);
-
-            setRelatedProducts([]);
-
-            setError(
-                "Unable to load product details"
-            );
+            if (!silent) {
+                setProduct(null);
+                setRelatedProducts([]);
+                setError("Unable to load product details");
+            }
 
 
         }
         finally {
 
 
-            if (version === requestVersion.current) setLoading(false);
+            if (version === requestVersion.current && !silent) setLoading(false);
 
 
         }

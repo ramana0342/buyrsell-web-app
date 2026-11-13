@@ -131,7 +131,7 @@ const SellerCard = ({ product }) => {
 
 
                         <strong>
-                            {owner_name}
+                            {owner_name || "\u00a0"}
                         </strong>
 
 

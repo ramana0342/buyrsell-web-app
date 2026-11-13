@@ -95,7 +95,7 @@ const RelatedProducts = ({ products = [] }) => {
 
                             aria-label={`View ${product.product_name}`}
 
-                            key={product.product_id}
+                            key={product.product_id || product.slug}
 
                         >
 

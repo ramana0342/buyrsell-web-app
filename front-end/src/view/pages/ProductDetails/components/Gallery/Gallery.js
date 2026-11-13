@@ -262,7 +262,7 @@ const Gallery = ({
 
                         <button
 
-                            key={image.image_id}
+                            key={`${image.image_id || image.image_url}-${index}`}
 
                             className={
 
