@@ -4,6 +4,10 @@ const response = (res, data, code = 200) => res.status(code).json({ status: { co
 const fail = (res, code, message) => res.status(code).json({ status: { code, success: false, message }, response: null });
 const validAmount = value => (typeof value === "number" || (typeof value === "string" && value.trim() !== "")) && Number.isFinite(Number(value)) && Number(value) > 0 && Number(value) <= 999999999999 && Math.abs(Number(value) * 100 - Math.round(Number(value) * 100)) < 1e-7;
 const partyId = (req, role) => role === "customer" ? req.customer?.customerId : req.seller?.sellerId;
+const rollbackQuietly = async client => {
+  if (!client) return;
+  try { await client.query("ROLLBACK"); } catch { /* The connection may already be unavailable. */ }
+};
 
 async function listOffers(req, res, role) {
   const id = partyId(req, role);
@@ -52,8 +56,9 @@ export const sellerOffers = (req, res) => listOffers(req, res, "seller").catch(e
 export async function createOffer(req, res) {
   const { productId, quantity, offeredTotal, message = "" } = req.body || {};
   if (!productId || !Number.isInteger(quantity) || quantity < 1 || !validAmount(offeredTotal) || typeof message !== "string" || message.length > 1000) return fail(res, 400, "Enter a valid product, quantity, offer amount, and message.");
-  const client = await pool.connect();
+  let client;
   try {
+    client = await pool.connect();
     await client.query("BEGIN");
     const p = await client.query("SELECT product_id, seller_id, selling_price, stock_quantity FROM buy_sell_mart.products WHERE product_id::text=$1 AND product_status='active' FOR UPDATE", [String(productId)]);
     if (!p.rowCount) { await client.query("ROLLBACK"); return fail(res, 404, "This product is unavailable."); }
@@ -66,8 +71,8 @@ export async function createOffer(req, res) {
     await client.query("INSERT INTO buy_sell_mart.product_offer_history(offer_id,sender_role,sender_id,amount,message,action) VALUES($1,'customer',$2,$3,$4,'offer')", [offer.offer_id, partyId(req, "customer"), Number(offeredTotal), message.trim() || null]);
     await client.query("COMMIT");
     return response(res, offer, 201);
-  } catch (e) { await client.query("ROLLBACK"); console.error("Create offer failed", e.message); return fail(res, 500, "Unable to submit offer."); }
-  finally { client.release(); }
+  } catch (e) { await rollbackQuietly(client); console.error("Create offer failed", e.message); return fail(res, 500, "Unable to submit offer."); }
+  finally { client?.release(); }
 }
 
 export async function createCombinedOffer(req, res) {
@@ -85,8 +90,9 @@ export async function createCombinedOffer(req, res) {
     normalized.push({ productId, quantity });
   }
 
-  const client = await pool.connect();
+  let client;
   try {
+    client = await pool.connect();
     await client.query("BEGIN");
     const productResult = await client.query(`
       SELECT p.product_id, p.seller_id, p.product_name, p.product_url, p.selling_price, p.stock_quantity,
@@ -141,18 +147,19 @@ export async function createCombinedOffer(req, res) {
     await client.query("COMMIT");
     return response(res, { ...offer, offer_items: lineItems.map(line => ({ product_id: line.product.product_id, product_name: line.product.product_name, quantity: line.quantity, listed_unit_price: line.unitCents / 100, listed_total: line.lineCents / 100 })) }, 201);
   } catch (e) {
-    await client.query("ROLLBACK");
+    await rollbackQuietly(client);
     console.error("Create combined offer failed", e.message);
     return fail(res, 500, "Unable to submit combined offer.");
-  } finally { client.release(); }
+  } finally { client?.release(); }
 }
 
 export async function offerAction(req, res) {
   const role = req.customer ? "customer" : "seller", id = partyId(req, role);
   const { action, amount, message = "" } = req.body || {};
   if (!['counteroffer','accept','reject','cancel'].includes(action) || typeof message !== "string" || message.length > 1000 || (action === "counteroffer" && !validAmount(amount))) return fail(res, 400, "Invalid negotiation action.");
-  const client = await pool.connect();
+  let client;
   try {
+    client = await pool.connect();
     await client.query("BEGIN");
     const found = await client.query("SELECT * FROM buy_sell_mart.product_offers WHERE offer_id=$1 AND (customer_id=$2 OR seller_id=$2) FOR UPDATE", [req.params.offerId, id]);
     if (!found.rowCount) { await client.query("ROLLBACK"); return fail(res, 404, "Offer not found."); }
@@ -183,15 +190,16 @@ export async function offerAction(req, res) {
     }
     const updated = await client.query("SELECT * FROM buy_sell_mart.product_offers WHERE offer_id=$1", [o.offer_id]);
     await client.query("COMMIT"); return response(res, updated.rows[0]);
-  } catch (e) { await client.query("ROLLBACK"); console.error("Offer action failed", e.message); return fail(res, 500, "Unable to update offer."); }
-  finally { client.release(); }
+  } catch (e) { await rollbackQuietly(client); console.error("Offer action failed", e.message); return fail(res, 500, "Unable to update offer."); }
+  finally { client?.release(); }
 }
 
 export async function confirmContact(req, res) {
   const role = req.customer ? "customer" : "seller", id = partyId(req, role);
   if (typeof req.body?.consent !== "boolean") return fail(res, 400, "Choose whether to share contact details.");
-  const client = await pool.connect();
+  let client;
   try {
+    client = await pool.connect();
     await client.query("BEGIN");
     const q = await client.query("SELECT * FROM buy_sell_mart.product_offers WHERE offer_id=$1 AND (customer_id=$2 OR seller_id=$2) FOR UPDATE", [req.params.offerId, id]);
     if (!q.rowCount) { await client.query("ROLLBACK"); return fail(res, 404, "Offer not found."); }
@@ -215,6 +223,6 @@ export async function confirmContact(req, res) {
     if (offer.status !== "accepted") return response(res, { offer, waitingForOtherParty: true });
     const contacts = await pool.query(`SELECT c.full_name AS customer_name,c.email AS customer_email,s.owner_name AS seller_name,s.business_name,s.email AS seller_email,s.phone AS seller_phone FROM buy_sell_mart.customers c,buy_sell_mart.sellers s WHERE c.customer_id::text=$1 AND s.seller_id::text=$2`, [offer.customer_id, offer.seller_id]);
     return response(res, { offer, contacts: contacts.rows[0] || null });
-  } catch (e) { await client.query("ROLLBACK"); console.error("Contact confirmation failed", e.message); return fail(res, 500, "Unable to confirm contact sharing."); }
-  finally { client.release(); }
+  } catch (e) { await rollbackQuietly(client); console.error("Contact confirmation failed", e.message); return fail(res, 500, "Unable to confirm contact sharing."); }
+  finally { client?.release(); }
 }

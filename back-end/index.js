@@ -6,7 +6,6 @@ import cors from "cors";
 import http from "http";
 import { Server } from "socket.io";
 
-import pool from "./config/database.js";
 // import { setupChatSocket } from "./sockets/chatSocket.js";
 // import chatRoutes from "./routes/chatRoutes.js";
 // import aiRoutes from "./routes/aiRoutes.js";
@@ -52,6 +51,11 @@ app.use(cors({
 app.use(express.json());
 app.use(cookieParser());
 
+// Lightweight liveness check for the hosting platform. This intentionally
+// does not depend on PostgreSQL so the HTTP service can start independently.
+app.get("/health", (req, res) => {
+  res.status(200).json({ status: "ok" });
+});
 
 app.use("/buyrsell/api/seller", sellerAuthRoutes);
 app.use("/buyrsell/api", sellerProductRoutes);
@@ -72,21 +76,8 @@ app.get("/", (req, res) => {
 
 const PORT = process.env.PORT || 6000;
 
-const startServer = async () => {
-  try {
-    const result = await pool.query("SELECT NOW()");
-
-    console.log("Database Connected Successfully");
-    console.log("DB Time:", result.rows[0].now);
-
-    server.listen(PORT, () => {
-      console.log(`Server started running on port ${PORT}`);
-    });
-
-  } catch (error) {
-    console.error("Database Connection Failed:", error.message);
-    process.exit(1);
-  }
-};
-
-startServer();
+// Do not hold HTTP startup on a database round trip. PostgreSQL connections
+// are opened lazily by the shared pool when an API request needs the database.
+server.listen(PORT, () => {
+  console.log(`Server started running on port ${PORT}`);
+});
