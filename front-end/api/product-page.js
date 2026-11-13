@@ -53,8 +53,9 @@ const pickFields = (value, fields) => Object.fromEntries(
     fields.filter(field => value[field] !== undefined).map(field => [field, value[field]])
 );
 
-const toPublicProduct = product => ({
+const toPublicProduct = (product, requestedSlug) => ({
     ...pickFields(product, PRODUCT_FIELDS),
+    product_url: `${SITE_ORIGIN}/product/${encodeURIComponent(product.slug || requestedSlug)}`,
     images: (Array.isArray(product.images) ? product.images : []).map(image => pickFields(
         image,
         ["image_url", "display_order"]
@@ -146,7 +147,7 @@ module.exports = async function handler(req, res) {
 
         const initialProductData = {
             slug: product.slug || slug,
-            product: toPublicProduct(product),
+            product: toPublicProduct(product, slug),
             relatedProducts: Array.isArray(payload.response.relatedProducts)
                 ? payload.response.relatedProducts.map(item => pickFields(item, RELATED_PRODUCT_FIELDS))
                 : []
